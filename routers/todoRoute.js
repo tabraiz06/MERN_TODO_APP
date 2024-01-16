@@ -25,7 +25,7 @@ const verifyToken=(req,res,next)=>{
 }
 
 router.post('/addtodo',verifyToken,async(req,res)=>{
-    console.log(req.user)
+
 try {
     const {todo}=req.body
     const newtodo=await Todo.create({todo,userId:req.user})
@@ -65,7 +65,7 @@ router.get('/fetchtodos',verifyToken,async(req,res)=>{
 
 // router.delete('/deleteall',verifyToken,async(req,res)=>{
 //     try {
-//         console.log(req.user)
+//         
 //         const deleteall=await Todo.find({userId:req.user})
 //         res.status(200).json({message:'success'})
 //     } catch (error) {

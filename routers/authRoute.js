@@ -29,7 +29,7 @@ const verifyToken=(req,res,next)=>{
 
 router.get('/fetchuser',verifyToken,async(req,res)=>{
    try {
-console.log(req.user)
+
     const user=await User.find()
     res.status(200).json(user)
    } catch (error) {
@@ -50,7 +50,7 @@ router.post('/register', async (req, res) => {
         const data = {
             user: user.id
         }
-        console.log(data)
+       
 
         const AuthToken = jwt.sign(data, secrte_key)
         res.status(200).json({ message: "registration successfull ", AuthToken, user })
@@ -62,7 +62,7 @@ router.post('/register', async (req, res) => {
 router.post('/login',async(req,res)=>{
     try {
         const{email,password}=req.body
-        console.log(req.body)
+        
         const user=await User.findOne({email})
         if(!user){
             res.status(400).json({message:'invalid credentials'})
