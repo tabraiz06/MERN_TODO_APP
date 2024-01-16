@@ -1,0 +1,37 @@
+.main{
+    padding: 26px 0;
+    justify-content: center;
+    align-items: center;
+    min-height: 350px;
+    background-color: antiquewhite;
+    gap: 2rem;
+    margin: 50px auto;
+    align-items: center;
+    flex-direction: column;
+    display: flex;
+    width: 60%;
+    border-radius: 20px;
+}
+.main form{
+    align-items: center;
+    width: 60%;
+    align-content: center;
+    
+    display: flex;
+    flex-direction: column;
+}
+form input{
+    padding: 17px 36px;
+    width: 100%;
+}
+@media (max-width:475px) {
+    .main{
+     width: 90%;
+     margin: 36px auto;
+    
+    } 
+    .main  form{
+        width: 80%;
+    }
+ 
+ }

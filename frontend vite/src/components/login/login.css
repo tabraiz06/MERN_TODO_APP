@@ -1,0 +1,33 @@
+.rounded-md{
+    border-radius: 20px;
+    min-height: 350px;
+    padding: 52px 0;
+    background-color: antiquewhite;
+    /* height: 300px; */
+    margin: 50px auto;
+    gap: 1rem;
+    justify-content: center;
+    width: 60%;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.rounded-md input{
+    padding: 17px 36px;
+    border-radius: 25px;
+    margin-bottom: 10px;
+    width: 90%;
+    border: 1px solid black;
+}
+@media (max-width:475px) {
+   .main{
+    width: 90%;
+    margin: 36px auto;
+   
+   } 
+   .rounded-md{
+    width: 80%;
+}
+
+}
