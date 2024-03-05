@@ -30,7 +30,7 @@ const Login = () => {
     const res = await response.json();
 
     const token = res.AtuhToken;
-
+    console.log(response.ok);
     if (response.ok) {
       localStorage.setItem("token", token);
       navigate("/");
