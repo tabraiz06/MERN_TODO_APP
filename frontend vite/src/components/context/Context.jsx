@@ -1,47 +1,41 @@
-import {  createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
+export const Context = createContext();
 
-export const Context=createContext()
+const ContextApi = ({ children }) => {
+  const [username, setusername] = useState("");
 
+  const [maintask, setmaintask] = useState([]);
+  useEffect(() => {});
+  const fetchtodos = async () => {
+    const response = await fetch(
+      `https://mern-todo-app-4t4v.onrender.com/api/fetchtodos`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          AuthToken: localStorage.getItem("token"),
+        },
+      }
+    );
+    const result = await response.json();
 
-const ContextApi = ({children}) => {
-
-  const [username, setusername] = useState('');
-  
-    const [maintask, setmaintask] = useState([]); 
-    useEffect(()=>{
-      
-    })
-    const fetchtodos=async()=>{
-        const response=await fetch(`${window.location.origin}/api/fetchtodos`,{
-            method:'GET',
-            headers:{
-                'Content-Type':'application/json',
-                'AuthToken':localStorage.getItem('token')
-            }
-        })
-        const result=await response.json()
-        console.log(result)
-        if(response.status===200){
-            setmaintask(result)
-        }
-       
-        console.log(maintask)
-
+    if (response.status === 200) {
+      setmaintask(result);
     }
-      useEffect(()=>{
-        
-        fetchtodos() 
-      },[]) 
-    // 
-   
-   
+  };
+  useEffect(() => {
+    fetchtodos();
+  }, []);
+  //
 
   return (
-    <Context.Provider value={{maintask,setmaintask,fetchtodos,setusername,username}}>
+    <Context.Provider
+      value={{ maintask, setmaintask, fetchtodos, setusername, username }}
+    >
       {children}
     </Context.Provider>
-  )
-}
+  );
+};
 
-export default ContextApi
+export default ContextApi;
