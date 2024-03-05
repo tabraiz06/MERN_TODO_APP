@@ -36,24 +36,24 @@ router.post("/register", async (req, res) => {
     const userExist = await User.findOne({ email });
     if (userExist) {
       res.status(400).json({ message: "email already registered" });
+    } else {
+      const securePassword = bcrypt.hashSync(password, 10);
+      const user = await User.create({
+        name,
+        username,
+        email,
+        phone,
+        password: securePassword,
+      });
+      const data = {
+        user: user.id,
+      };
+
+      const AuthToken = jwt.sign(data, secrte_key);
+      res
+        .status(200)
+        .json({ message: "registration successfull ", AuthToken, user });
     }
-
-    const securePassword = bcrypt.hashSync(password, 10);
-    const user = await User.create({
-      name,
-      username,
-      email,
-      phone,
-      password: securePassword,
-    });
-    const data = {
-      user: user.id,
-    };
-
-    const AuthToken = jwt.sign(data, secrte_key);
-    res
-      .status(200)
-      .json({ message: "registration successfull ", AuthToken, user });
   } catch (error) {
     res.status(400).json(error.message);
   }
@@ -66,21 +66,22 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) {
       res.status(400).json({ message: "invalid credentials" });
+    } else {
+      const comparePassword = await bcrypt.compare(password, user.password);
+      if (!comparePassword) {
+        res.status(400).json({ message: "please provide valid password" });
+      }
+      const data = {
+        user: user.id,
+      };
+      const AtuhToken = jwt.sign(data, secrte_key);
+      res.status(200).json({
+        message: "login successfull",
+        AtuhToken,
+        result: "success",
+        user,
+      });
     }
-    const comparePassword = await bcrypt.compare(password, user.password);
-    if (!comparePassword) {
-      res.status(400).json({ message: "please provide valid password" });
-    }
-    const data = {
-      user: user.id,
-    };
-    const AtuhToken = jwt.sign(data, secrte_key);
-    res.status(200).json({
-      message: "login successfull",
-      AtuhToken,
-      result: "success",
-      user,
-    });
   } catch (error) {
     res.status(400).json(error.message);
   }
